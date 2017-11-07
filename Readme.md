@@ -1,7 +1,7 @@
 # Личный проект «YetiCave» 
 
 * Студент: [Елена Валеева](https://up.htmlacademy.ru/php/3/user/232403).
-* Наставник: `Неизвестно`.
+* Наставник: [Денис Байдаров](https://htmlacademy.ru/profile/4er).
 
 ---
 
