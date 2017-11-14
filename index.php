@@ -22,12 +22,30 @@ $time_till_midnight = $tomorrow - $now;
 $lot_time_remaining = gmdate("H:i", $time_till_midnight);
 
 $categories = [
-    "Доски и лыжи",
-    "Крепления",
-    "Ботинки",
-    "Одежда",
-    "Инструменты",
-    "Разное"
+    [
+        "mod" => "boards",
+        "cat" => "Доски и лыжи"
+    ],
+    [
+        "mod" => "attachment",
+        "cat" => "Крепления"
+    ],
+    [
+        "mod" => "boots",
+        "cat" => "Ботинки"
+    ],
+    [
+        "mod" => "clothing",
+        "cat" => "Одежда"
+    ],
+    [
+        "mod" => "tools",
+        "cat" => "Инструменты"
+    ],
+    [
+        "mod" => "other",
+        "cat" => "Разное"
+    ]
 ];
 
 $items = [
@@ -93,21 +111,21 @@ $items = [
 
         <nav class="user-menu">
             <?php if ($is_auth): ?>
-            <div class="user-menu__image">
-                <img src="<?=$user_avatar; ?>" width="40" height="40" alt="Пользователь">
-            </div>
-            <div class="user-menu__logged">
-                <p><?=$user_name; ?></p>
-            </div>
+                <div class="user-menu__image">
+                    <img src="<?=$user_avatar; ?>" width="40" height="40" alt="Пользователь">
+                </div>
+                <div class="user-menu__logged">
+                    <p><?=$user_name; ?></p>
+                </div>
             <?php else: ?>
-            <ul class="user-menu__list">
-                <li class="user-menu__item">
-                    <a href="#">Регистрация</a>
-                </li>
-                <li class="user-menu__item">
-                    <a href="#">Вход</a>
-                </li>
-            </ul>
+                <ul class="user-menu__list">
+                    <li class="user-menu__item">
+                        <a href="#">Регистрация</a>
+                    </li>
+                    <li class="user-menu__item">
+                        <a href="#">Вход</a>
+                    </li>
+                </ul>
             <?php endif; ?>
         </nav>
     </div>
@@ -120,8 +138,8 @@ $items = [
         <ul class="promo__list">
             <?php  $cat_index = 0; ?>
             <?php while ($cat_index < count($categories)) { ?>
-                <li class="promo__item promo__item--boards">
-                    <a class="promo__link" href="all-lots.html"><?=$categories[$cat_index]; ?></a>
+                <li class="promo__item promo__item--<?=$categories[$cat_index]['mod']; ?>">
+                    <a class="promo__link" href="all-lots.html"><?=$categories[$cat_index]['cat']; ?></a>
                 </li>
                 <?php $cat_index++; ?>
             <?php } ?>
