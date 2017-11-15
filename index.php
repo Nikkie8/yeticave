@@ -175,9 +175,9 @@ $items = [
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
-            <?php foreach ($categories as $key => $val): ?>
+            <?php foreach ($categories as $key => $item): ?>
                 <li class="nav__item">
-                    <a href="all-lots.html"><?=$val['cat']; ?></a>
+                    <a href="all-lots.html"><?=$item['category']; ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
