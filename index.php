@@ -23,28 +23,28 @@ $lot_time_remaining = gmdate("H:i", $time_till_midnight);
 
 $categories = [
     [
-        "mod" => "boards",
-        "cat" => "Доски и лыжи"
+        "modifier" => "boards",
+        "category" => "Доски и лыжи"
     ],
     [
-        "mod" => "attachment",
-        "cat" => "Крепления"
+        "modifier" => "attachment",
+        "category" => "Крепления"
     ],
     [
-        "mod" => "boots",
-        "cat" => "Ботинки"
+        "modifier" => "boots",
+        "category" => "Ботинки"
     ],
     [
-        "mod" => "clothing",
-        "cat" => "Одежда"
+        "modifier" => "clothing",
+        "category" => "Одежда"
     ],
     [
-        "mod" => "tools",
-        "cat" => "Инструменты"
+        "modifier" => "tools",
+        "category" => "Инструменты"
     ],
     [
-        "mod" => "other",
-        "cat" => "Разное"
+        "modifier" => "other",
+        "category" => "Разное"
     ]
 ];
 
@@ -136,13 +136,11 @@ $items = [
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
-            <?php  $cat_index = 0; ?>
-            <?php while ($cat_index < count($categories)) { ?>
-                <li class="promo__item promo__item--<?=$categories[$cat_index]['mod']; ?>">
-                    <a class="promo__link" href="all-lots.html"><?=$categories[$cat_index]['cat']; ?></a>
+            <?php foreach ($categories as $key => $item): ?>
+                <li class="promo__item promo__item--<?=$item['modifier']; ?>">
+                    <a class="promo__link" href="all-lots.html"><?=$item['category']; ?></a>
                 </li>
-                <?php $cat_index++; ?>
-            <?php } ?>
+            <?php endforeach; ?>
         </ul>
     </section>
     <section class="lots">
