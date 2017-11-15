@@ -7,6 +7,29 @@ $bets = [
     ['name' => 'Евгений', 'price' => 10500, 'ts' => strtotime('-' . rand(25, 50) .' hour')],
     ['name' => 'Семён', 'price' => 10000, 'ts' => strtotime('last week')]
 ];
+
+date_default_timezone_set('Europe/Moscow');
+
+function format_time($time) {
+    $now = strtotime('now');
+    $time_passed = $now - $time;
+    $hours = $time_passed / 3600;
+
+    if ($hours < 1) {
+        $format = 'i минут назад';
+        $time_stamp = $time_passed;
+    } elseif ($hours >= 1 and $hours < 24) {
+        $format = 'H часов назад';
+        $time_stamp = $time_passed;
+    } else {
+        $format = 'd.m.y в H:i';
+        $time_stamp = $time;
+    }
+
+    $formatted_time = date($format, $time_stamp);
+
+    return $formatted_time;
+}
 ?>
 
 <!DOCTYPE html>
@@ -109,13 +132,14 @@ $bets = [
                 </div>
                 <div class="history">
                     <h3>История ставок (<span>4</span>)</h3>
-                    <!-- заполните эту таблицу данными из массива $bets-->
                     <table class="history__list">
-                        <tr class="history__item">
-                            <td class="history__name"><!-- имя автора--></td>
-                            <td class="history__price"><!-- цена--> р</td>
-                            <td class="history__time"><!-- дата в человеческом формате--></td>
-                        </tr>
+                        <?php foreach ($bets as $key => $item): ?>
+                            <tr class="history__item">
+                                <td class="history__name"><?=$item['name']; ?></td>
+                                <td class="history__price"><?=$item['price']; ?> р</td>
+                                <td class="history__time"><?=format_time($item['ts']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </table>
                 </div>
             </div>
