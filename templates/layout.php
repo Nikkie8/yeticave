@@ -7,11 +7,10 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-
     <header class="main-header">
         <div class="main-header__container container">
             <h1 class="visually-hidden">YetiCave</h1>
-            <a class="main-header__logo">
+            <a class="main-header__logo" <?php if ($is_index) { } else { print('href="index.php"'); } ?>>
                 <img src="img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
             </a>
             <form class="main-header__search" method="get" action="https://echo.htmlacademy.ru">
@@ -19,7 +18,6 @@
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
             <a class="main-header__add-lot button" href="add-lot.html">Добавить лот</a>
-
             <nav class="user-menu">
                 <?php if ($is_auth): ?>
                     <div class="user-menu__image">
@@ -41,11 +39,9 @@
             </nav>
         </div>
     </header>
-
-    <main class="container">
+    <main class="<?=$main_class ?>">
         <?=$content; ?>
     </main>
-
     <footer class="main-footer">
         <nav class="nav">
             <ul class="nav__list container">
