@@ -1,34 +1,3 @@
-<?php
-
-// ставки пользователей, которыми надо заполнить таблицу
-$bets = [
-    ['name' => 'Иван', 'price' => 11500, 'ts' => strtotime('-' . rand(1, 50) .' minute')],
-    ['name' => 'Константин', 'price' => 11000, 'ts' => strtotime('-' . rand(1, 18) .' hour')],
-    ['name' => 'Евгений', 'price' => 10500, 'ts' => strtotime('-' . rand(25, 50) .' hour')],
-    ['name' => 'Семён', 'price' => 10000, 'ts' => strtotime('last week')]
-];
-
-function format_time($time) {
-    $now = strtotime('now');
-    $time_passed = $now - $time;
-    $hours = $time_passed / 3600;
-
-    if ($hours < 1) {
-        $format = 'i минут назад';
-        $time_stamp = $time_passed;
-    } elseif ($hours >= 1 and $hours < 24) {
-        $format = 'H часов назад';
-        $time_stamp = $time_passed;
-    } else {
-        $format = 'd.m.y в H:i';
-        $time_stamp = $time;
-    }
-
-    $formatted_time = date($format, $time_stamp);
-
-    return $formatted_time;
-}
-?>
 <nav class="nav">
     <ul class="nav__list container">
         <li class="nav__item">
@@ -107,7 +76,5 @@ function format_time($time) {
                 </div>
             </div>
         </div>
-    <?php else: ?>
-        <h2>Лот с этим ID не найден</h2>
     <?php endif; ?>
 </section>

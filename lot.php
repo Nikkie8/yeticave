@@ -6,21 +6,17 @@ $item = null;
 
 if (isset($_GET['lot_id'])) {
     $lot_id = $_GET['lot_id'];
-
-    foreach ($items as $key => $lot) {
-        if ($key == $lot_id) {
-            $item = $lot;
-            break;
-        }
-    }
+    $item = $items[$lot_id];
 }
 
 if (!$item) {
     http_response_code(404);
+    exit();
 }
 
 $lot_content = render_template('templates/lot.php', [
-    'item' => $item
+    'item' => $item,
+    'bets' => $bets
 ]);
 
 $lot_layout = render_template('templates/layout.php', [
