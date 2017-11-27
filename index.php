@@ -2,14 +2,16 @@
 require_once('functions.php');
 require_once('data.php');
 
-$page_content = render_template('templates/index.php', [
+$index_content = render_template('templates/index.php', [
     'categories' => $categories,
     'items' => $items,
     'lot_time_remaining' => $lot_time_remaining
 ]);
 
-$layout = render_template('templates/layout.php', [
-    'content' => $page_content,
+$index_layout = render_template('templates/layout.php', [
+    'is_index' => true,
+    'main_class' => 'container',
+    'content' => $index_content,
     'categories' => $categories,
     'page_title' => 'YetiCave',
     'is_auth' => $is_auth,
@@ -17,4 +19,4 @@ $layout = render_template('templates/layout.php', [
     'user_avatar' => $user_avatar
 ]);
 
-print($layout);
+print($index_layout);
