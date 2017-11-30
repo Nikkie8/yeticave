@@ -4,7 +4,15 @@ require_once('data.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $item = $_POST;
-    print_r($item);
+
+    if (isset($_FILES['image']['name'])) {
+        $path = 'img/' . $_FILES['image']['name'];
+        $res = move_uploaded_file($_FILES['image']['tmp_name'], 'img/' . $_FILES['image']['name']);
+    }
+
+    if (isset($path)) {
+        $item['image'] = $path;
+    }
 
     $add_content = render_template('templates/lot.php', [
         'item' => $item
