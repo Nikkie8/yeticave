@@ -18,10 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     foreach ($item as $key => $value) {
         if (in_array($key, $required)) {
-            if (!$value || $item['category'] == 'Выберите категорию') {
+            if (!$value) {
                 $errors[$key] = $errorsDictionary[$key];
             }
         }
+    }
+
+    if ($item['category'] == 'Выберите категорию') {
+        $errors['category'] = $errorsDictionary['category'];
     }
 
     if (isset($_FILES['image']['name'])) {
