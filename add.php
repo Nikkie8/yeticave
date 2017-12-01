@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'lot-name' => 'Введите наименование лота',
         'category' => 'Выберите категорию',
         'message' => 'Напишите описание лота',
-        'image' => '',
+        'image' => 'Загрузите файл в формате jpg/png',
         'lot-rate' => 'Введите начальную цену',
         'lot-step' => 'Введите шаг ставки',
         'lot-date' => 'Введите дату завершения торгов'
@@ -28,13 +28,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors['category'] = $errorsDictionary['category'];
     }
 
-    if (isset($_FILES['image']['name'])) {
-        $path = 'img/' . $_FILES['image']['name'];
-        $res = move_uploaded_file($_FILES['image']['tmp_name'], 'img/' . $_FILES['image']['name']);
-    }
+    if (empty($_FILES['image']['name'])) {
+        $errors['image'] = $errorsDictionary['image'];
+    } else {
+        $tmp_name = $_FILES['image']['tmp_name'];
+        $file_info = finfo_open(FILEINFO_MIME_TYPE);
+        $file_type = finfo_file($file_info, $tmp_name);
 
-    if (isset($path)) {
-        $item['image'] = $path;
+        if ($file_type !== 'image/jpeg' && $file_type !== 'image/png') {
+            $errors['image'] = $errorsDictionary['image'];
+        } else {
+            $path = 'img/' . $_FILES['image']['name'];
+            $res = move_uploaded_file($tmp_name, $path);
+            $item['image'] = $path;
+        }
     }
 
     if (count($errors)) {
@@ -44,7 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ]);
     } else {
         $add_content = render_template('templates/lot.php', [
-            'item' => $item
+            'item' => $item,
+            'bets' => $bets
         ]);
     }
 } else {

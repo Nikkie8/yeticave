@@ -47,12 +47,12 @@
         <textarea id="message" name="message" placeholder="Напишите описание лота"><?=$item['message']; ?></textarea>
         <span class="form__error"><?=$errors['message']; ?></span>
     </div>
-    <div class="form__item form__item--file"> <!-- form__item--uploaded -->
+    <div class="form__item <?php if (isset($errors['image'])) { print('form__item--invalid'); } ?> form__item--file"> <!-- form__item--uploaded -->
         <label>Изображение</label>
         <div class="preview">
             <button class="preview__remove" type="button">x</button>
             <div class="preview__img">
-                <img src="img/avatar.jpg" width="113" height="113" alt="Изображение лота">
+                <img src="<?=$errors['image']; ?>" width="113" height="113" alt="Изображение лота">
             </div>
         </div>
         <div class="form__input-file">
@@ -61,6 +61,7 @@
                 <span>+ Добавить</span>
             </label>
         </div>
+        <span class="form__error"><?=$errors['image']; ?></span>
     </div>
     <div class="form__container-three">
         <div class="form__item form__item--small <?php if (isset($errors['lot-rate'])) { print('form__item--invalid'); } ?>">
