@@ -32,12 +32,9 @@
             <label for="category">Категория</label>
             <select id="category" name="category" value="<?=$item['category']; ?>">
                 <option>Выберите категорию</option>
-                <option <?php if ($item['category'] == 'Доски и лыжи') { print('selected'); } ?>>Доски и лыжи</option>
-                <option <?php if ($item['category'] == 'Крепления') { print('selected'); } ?>>Крепления</option>
-                <option <?php if ($item['category'] == 'Ботинки') { print('selected'); } ?>>Ботинки</option>
-                <option <?php if ($item['category'] == 'Одежда') { print('selected'); } ?>>Одежда</option>
-                <option <?php if ($item['category'] == 'Инструменты') { print('selected'); } ?>>Инструменты</option>
-                <option <?php if ($item['category'] == 'Разное') { print('selected'); } ?>>Разное</option>
+                <?php foreach ($categories as $key => $value): ?>
+                    <option <?php if ($item['category'] == $value['category']) { print('selected'); } ?>><?=$value['category']; ?></option>
+                <?php endforeach; ?>
             </select>
             <span class="form__error"><?=$errors['category']; ?></span>
         </div>

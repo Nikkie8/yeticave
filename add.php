@@ -47,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (count($errors)) {
         $add_content = render_template('templates/add.php', [
             'item' => $item,
-            'errors' => $errors
+            'errors' => $errors,
+            'categories' => $categories
         ]);
     } else {
         $add_content = render_template('templates/lot.php', [
@@ -56,7 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ]);
     }
 } else {
-    $add_content = render_template('templates/add.php');
+    $add_content = render_template('templates/add.php', [
+        'categories' => $categories
+    ]);
 }
 
 $add_layout = render_template('templates/layout.php', [
