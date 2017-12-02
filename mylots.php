@@ -2,7 +2,16 @@
 require_once('functions.php');
 require_once('data.php');
 
-$mylots_content = render_template('templates/mylots.php');
+if (isset($_COOKIE['my-lots'])) {
+    $my_bets = json_decode($_COOKIE['my-lots'], true);
+
+    $mylots_content = render_template('templates/mylots.php', [
+        'my_bets' => $my_bets,
+        'items' => $items
+    ]);
+} else {
+    $mylots_content = render_template('templates/mylots.php');
+}
 
 $mylots_layout = render_template('templates/layout.php', [
     'content' => $mylots_content,

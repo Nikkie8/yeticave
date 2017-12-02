@@ -3,6 +3,14 @@ require_once('functions.php');
 require_once('data.php');
 
 $item = null;
+$my_bets = [];
+$cookie_name = 'my-lots';
+$cookie_expire = strtotime('+30 days');
+$cookie_path = '/';
+
+if (isset($_COOKIE['my-lots'])) {
+    $my_bets = json_decode($_COOKIE[$cookie_name], true);
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET['lot_id'])) {
@@ -14,15 +22,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         http_response_code(404);
         exit();
     }
-} else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $bet = $_POST;
     $bet['date'] = strtotime('now');
-    $bet['formatted-date'] = date('d.m.y', $bet['date']);
     $lot_id = $bet['lot-id'];
-    $item = $items[$lot_id];
-
-    print_r($bet);
+    $my_bets[] = $bet;
+    header('Location: /mylots.php');
 }
+
+$cookie_value = json_encode($my_bets);
+
+setcookie($cookie_name, $cookie_value, $cookie_expire, $cookie_path);
 
 $lot_content = render_template('templates/lot.php', [
     'item' => $item,
