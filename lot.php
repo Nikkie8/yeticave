@@ -4,14 +4,24 @@ require_once('data.php');
 
 $item = null;
 
-if (isset($_GET['lot_id'])) {
-    $lot_id = $_GET['lot_id'];
-    $item = $items[$lot_id];
-}
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if (isset($_GET['lot_id'])) {
+        $lot_id = $_GET['lot_id'];
+        $item = $items[$lot_id];
+    }
 
-if (!$item) {
-    http_response_code(404);
-    exit();
+    if (!$item) {
+        http_response_code(404);
+        exit();
+    }
+} else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $bet = $_POST;
+    $bet['date'] = strtotime('now');
+    $bet['formatted-date'] = date('d.m.y', $bet['date']);
+    $lot_id = $bet['lot-id'];
+    $item = $items[$lot_id];
+
+    print_r($bet);
 }
 
 $lot_content = render_template('templates/lot.php', [
