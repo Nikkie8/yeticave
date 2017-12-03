@@ -5,6 +5,10 @@ require_once('data.php');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $item = $_POST;
     $required = ['lot-name', 'category', 'message', 'image', 'lot-rate', 'lot-step', 'lot-date'];
+    $rules = [
+        'lot-rate' => 'validate_number',
+        'lot-step' => 'validate_number'
+    ];
     $errorsDictionary = [
         'lot-name' => 'Введите наименование лота',
         'category' => 'Выберите категорию',
@@ -17,8 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = [];
 
     foreach ($item as $key => $value) {
-        if (in_array($key, $required)) {
-            if (!$value) {
+        if (in_array($key, $required) && $value == '') {
+            $errors[$key] = $errorsDictionary[$key];
+        }
+
+        if (key_exists($key, $rules)) {
+            $result = call_user_func($rules[$key], $value);
+
+            if (!$result) {
                 $errors[$key] = $errorsDictionary[$key];
             }
         }

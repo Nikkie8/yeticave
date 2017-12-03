@@ -1046,6 +1046,11 @@ input:invalid .form__error{
   border-radius: 3px;
 }
 
+.lot-item__form-item--invalid input {
+  background: #ffffff url("../img/error.svg") 97% 11px no-repeat;
+  border-color: #f84646;
+}
+
 .lot-item__form-item input:focus {
   border-color: #45abde;
 }

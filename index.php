@@ -4,8 +4,7 @@ require_once('data.php');
 
 $index_content = render_template('templates/index.php', [
     'categories' => $categories,
-    'items' => $items,
-    'lot_time_remaining' => $lot_time_remaining
+    'items' => $items
 ]);
 
 $index_layout = render_template('templates/layout.php', [

@@ -32,3 +32,25 @@ function format_time($time) {
 
     return $formatted_time;
 }
+
+function get_timer($time) {
+    $now_ts = strtotime('now');
+    $time_ts = strtotime($time);
+    $hours_left = ($time_ts - $now_ts) / 3600;
+    $now = date_create('now');
+    $date = date_create($time);
+    $interval = date_diff($now, $date);
+    $time_left = $interval->format('%H:%I');
+
+    if ($now_ts >= $time_ts) {
+        $time_left = '00:00';
+    } elseif ($hours_left > 24) {
+        $time_left = $interval->format('%d д');
+    }
+
+    return $time_left;
+}
+
+function validate_number($val) {
+    return is_numeric($val);
+}

@@ -77,6 +77,5 @@
             <span class="form__error"><?=$errors['lot-date']; ?></span>
         </div>
     </div>
-    <span class="form__error <?php if (isset($errors)) { print('form__error--bottom'); } ?>">Пожалуйста, исправьте ошибки в форме.</span>
     <button type="submit" class="button">Добавить лот</button>
 </form>
