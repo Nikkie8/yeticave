@@ -36,7 +36,7 @@
                     <?=$item['category']; ?>
                 </td>
                 <td class="rates__timer">
-                    <div class="timer timer--finishing"><?=$bet['formatted-date']; ?></div>
+                    <div class="timer timer--finishing"><?=get_timer($item['lot-date']); ?></div>
                 </td>
                 <td class="rates__price">
                     <?=$bet['cost']; ?> р

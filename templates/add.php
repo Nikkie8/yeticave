@@ -25,7 +25,7 @@
     <div class="form__container-two">
         <div class="form__item <?php if (isset($errors['lot-name'])) { print('form__item--invalid'); } ?>">
             <label for="lot-name">Наименование</label>
-            <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота" value="<?=$item['lot-name']; ?>">
+            <input id="lot-name" type="text" name="lot-name" placeholder="Введите наименование лота" value="<?=$item['lot-name']; ?>" required>
             <span class="form__error"><?=$errors['lot-name']; ?></span>
         </div>
         <div class="form__item <?php if (isset($errors['category'])) { print('form__item--invalid'); } ?>">
@@ -77,6 +77,5 @@
             <span class="form__error"><?=$errors['lot-date']; ?></span>
         </div>
     </div>
-    <span class="form__error <?php if (isset($errors)) { print('form__error--bottom'); } ?>">Пожалуйста, исправьте ошибки в форме.</span>
     <button type="submit" class="button">Добавить лот</button>
 </form>
