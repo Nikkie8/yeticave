@@ -6,13 +6,11 @@ $item = null;
 $my_bets = [];
 $errors = [];
 $required = ['cost'];
+$rules = ['cost' => 'validate_number'];
 $errorsDictionary = ['cost' => 'Введите ставку'];
 $cookie_name = 'my-lots';
 $cookie_expire = strtotime('+30 days');
 $cookie_path = '/';
-
-// 1 забрать лот id из массива со ставками
-// 2 добавить к лоту информацию о том, что ставка подана
 
 if (isset($_COOKIE['my-lots'])) {
     $my_bets = json_decode($_COOKIE[$cookie_name], true);
@@ -22,30 +20,31 @@ if (isset($_COOKIE['my-lots'])) {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_GET['lot_id'])) {
-        $lot_id = $_GET['lot_id'];
-        $item = $items[$lot_id];
-        $item['lot-id'] = $lot_id;
-        $lot_content = render_template('templates/lot.php', [
-            'item' => $item,
-            'bets' => $bets
-        ]);
-    }
+if (isset($_GET['lot_id'])) {
+    $lot_id = $_GET['lot_id'];
+    $item = $items[$lot_id];
+    $item['lot-id'] = $lot_id;
+    $lot_content = render_template('templates/lot.php', [
+        'item' => $item,
+        'bets' => $bets
+    ]);
+}
 
-    if (!$item) {
-        http_response_code(404);
-        exit();
-    }
-} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (isset($_POST['lot-id'])) {
     $bet = $_POST;
     $lot_id = $bet['lot-id'];
     $item = $items[$lot_id];
     $item['lot-id'] = $lot_id;
 
     foreach ($bet as $key => $value) {
-        if (in_array($key, $required)) {
-            if (!$value) {
+        if (in_array($key, $required) && $value == '') {
+            $errors[$key] = $errorsDictionary[$key];
+        }
+
+        if (key_exists($key, $rules)) {
+            $result = call_user_func($rules[$key], $value);
+
+            if (!$result) {
                 $errors[$key] = $errorsDictionary[$key];
             }
         }
@@ -65,6 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $cookie_value = json_encode($my_bets);
         setcookie($cookie_name, $cookie_value, $cookie_expire, $cookie_path);
     }
+}
+
+if (!$item) {
+    http_response_code(404);
+    exit();
 }
 
 $lot_layout = render_template('templates/layout.php', [

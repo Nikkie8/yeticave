@@ -50,3 +50,7 @@ function get_timer($time) {
 
     return $time_left;
 }
+
+function validate_number($val) {
+    return is_numeric($val);
+}
