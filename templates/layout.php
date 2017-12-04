@@ -1,6 +1,7 @@
 <?php
+    $user_registered = check_auth();
     $link_to_index = (!$is_index) ? 'href="index.php"' : '';
-    $is_auth = ($user_registered !== []) ? true : false;
+    $is_auth = $user_registered ? true : false;
 ?>
 <!DOCTYPE html>
 <html lang="ru">

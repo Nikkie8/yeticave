@@ -89,3 +89,18 @@ function search_user($email, $users) {
 
     return $result;
 }
+
+/**
+ * @return array
+ */
+function check_auth() {
+    session_start();
+
+    $user_registered = [];
+
+    if (isset($_SESSION['user'])) {
+        $user_registered = $_SESSION['user'];
+    }
+
+    return $user_registered;
+}

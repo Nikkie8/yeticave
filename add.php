@@ -2,6 +2,11 @@
 require_once('functions.php');
 require_once('data.php');
 
+if (!check_auth()) {
+    http_response_code(403);
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $item = $_POST;
     $required = ['lot-name', 'category', 'message', 'image', 'lot-rate', 'lot-step', 'lot-date'];

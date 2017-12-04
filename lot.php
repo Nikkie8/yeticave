@@ -4,6 +4,7 @@ require_once('data.php');
 
 $item = null;
 $my_bets = [];
+$user_registered = check_auth();
 $errors = [];
 $required = ['cost'];
 $rules = ['cost' => 'validate_price'];
@@ -26,7 +27,8 @@ if (isset($_GET['lot_id'])) {
     $item['lot-id'] = $lot_id;
     $lot_content = render_template('templates/lot.php', [
         'item' => $item,
-        'bets' => $bets
+        'bets' => $bets,
+        'user_registered' => $user_registered
     ]);
 }
 
@@ -54,7 +56,7 @@ if (isset($_POST['lot-id'])) {
         $lot_content = render_template('templates/lot.php', [
             'item' => $item,
             'bets' => $bets,
-            'errors' => $errors
+            'errors' => $errors,
         ]);
     } else {
         $bet['date'] = strtotime('now');
