@@ -54,3 +54,16 @@ function get_timer($time) {
 function validate_number($val) {
     return is_numeric($val);
 }
+
+function search_user($email, $users) {
+    $result = null;
+
+    foreach ($users as $user) {
+        if ($user['email'] == $email) {
+            $result = $user;
+            break;
+        }
+    }
+
+    return $result;
+}
