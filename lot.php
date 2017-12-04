@@ -6,7 +6,7 @@ $item = null;
 $my_bets = [];
 $errors = [];
 $required = ['cost'];
-$rules = ['cost' => 'validate_number'];
+$rules = ['cost' => 'validate_price'];
 $errorsDictionary = ['cost' => 'Введите ставку'];
 $cookie_name = 'my-lots';
 $cookie_expire = strtotime('+30 days');
