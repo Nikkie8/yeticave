@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $login_layout = render_template('templates/layout.php', [
     'content' => $login_content,
     'categories' => $categories,
+    'user_registered' => $_SESSION['user'],
     'page_title' => 'Вход в систему'
 ]);
 

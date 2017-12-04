@@ -1,5 +1,6 @@
 <?php
     $link_to_index = (!$is_index) ? 'href="index.php"' : '';
+    $is_auth = ($user_registered !== []) ? true : false;
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -24,10 +25,11 @@
             <nav class="user-menu">
                 <?php if ($is_auth): ?>
                     <div class="user-menu__image">
-                        <img src="<?= $user_avatar; ?>" width="40" height="40" alt="Пользователь">
+                        <img src="<?= $user_registered['avatar']; ?>" width="40" height="40" alt="<?= $user_registered['name']; ?>">
                     </div>
                     <div class="user-menu__logged">
-                        <p><?= $user_name; ?></p>
+                        <p><?= $user_registered['name']; ?></p>
+                        <a href="logout.php">Выйти</a>
                     </div>
                 <?php else: ?>
                     <ul class="user-menu__list">
