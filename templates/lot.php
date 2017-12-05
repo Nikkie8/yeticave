@@ -1,3 +1,6 @@
+<?php
+    $is_auth = $user_registered ? true : false;
+?>
 <nav class="nav">
     <ul class="nav__list container">
         <li class="nav__item">
@@ -44,7 +47,7 @@
                         Мин. ставка <span><?=$item['lot-rate'] + $item['lot-step']; ?> р</span>
                     </div>
                 </div>
-                <form class="lot-item__form <?php if (isset($errors)) { print('form--invalid'); } ?> <?php if ($item['is-bet'] || get_timer($item['lot-date']) == '00:00') { print('visually-hidden'); } ?>" action="lot.php" method="post">
+                <form class="lot-item__form <?php if (isset($errors)) { print('form--invalid'); } ?> <?php if ($item['is-bet'] || get_timer($item['lot-date']) == '00:00' || !$is_auth) { print('visually-hidden'); } ?>" action="lot.php" method="post">
                     <p class="lot-item__form-item <?php if (isset($errors['cost'])) { print('lot-item__form-item--invalid'); } ?>">
                         <label for="cost">Ваша ставка</label>
                         <input id="cost" type="number" name="cost" placeholder="<?=$item['lot-rate'] + $item['lot-step']; ?>">

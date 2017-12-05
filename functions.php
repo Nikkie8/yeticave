@@ -1,4 +1,9 @@
 <?php
+/** Подключает шаблон
+ * @param string $template_url ссылка на шаблон
+ * @param array $data массив с данными
+ * @return string разметка
+ */
 function render_template($template_url = '', $data = []) {
     $result = '';
 
@@ -12,6 +17,10 @@ function render_template($template_url = '', $data = []) {
     return $result;
 }
 
+/**
+ * @param $time
+ * @return false|string
+ */
 function format_time($time) {
     $now = strtotime('now');
     $time_passed = $now - $time;
@@ -33,6 +42,10 @@ function format_time($time) {
     return $formatted_time;
 }
 
+/**
+ * @param $time
+ * @return string
+ */
 function get_timer($time) {
     $now_ts = strtotime('now');
     $time_ts = strtotime($time);
@@ -51,6 +64,43 @@ function get_timer($time) {
     return $time_left;
 }
 
-function validate_number($val) {
-    return is_numeric($val);
+function validate_price($val) {
+    $number = floatval($val);
+    $is_number = is_numeric($number);
+    $is_positive = $number >= 0;
+
+    return ($is_number && $is_positive);
+}
+
+/**
+ * @param $email
+ * @param $users
+ * @return null or user
+ */
+function search_user($email, $users) {
+    $result = null;
+
+    foreach ($users as $user) {
+        if ($user['email'] == $email) {
+            $result = $user;
+            break;
+        }
+    }
+
+    return $result;
+}
+
+/**
+ * @return array
+ */
+function check_auth() {
+    session_start();
+
+    $user_registered = [];
+
+    if (isset($_SESSION['user'])) {
+        $user_registered = $_SESSION['user'];
+    }
+
+    return $user_registered;
 }

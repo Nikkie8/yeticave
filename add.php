@@ -2,12 +2,17 @@
 require_once('functions.php');
 require_once('data.php');
 
+if (!check_auth()) {
+    http_response_code(403);
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $item = $_POST;
     $required = ['lot-name', 'category', 'message', 'image', 'lot-rate', 'lot-step', 'lot-date'];
     $rules = [
-        'lot-rate' => 'validate_number',
-        'lot-step' => 'validate_number'
+        'lot-rate' => 'validate_price',
+        'lot-step' => 'validate_price'
     ];
     $errorsDictionary = [
         'lot-name' => 'Введите наименование лота',

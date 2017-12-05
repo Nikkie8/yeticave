@@ -12,10 +12,7 @@ $index_layout = render_template('templates/layout.php', [
     'main_class' => 'container',
     'content' => $index_content,
     'categories' => $categories,
-    'page_title' => 'YetiCave',
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
-    'user_avatar' => $user_avatar
+    'page_title' => 'YetiCave'
 ]);
 
 print($index_layout);
