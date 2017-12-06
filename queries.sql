@@ -89,3 +89,21 @@ INSERT INTO bets SET date = '2017-12-02', price = 8200, user_id = 3, lot_id = 3;
 INSERT INTO bets SET date = '2017-12-04', price = 11199, user_id = 3, lot_id = 4;
 INSERT INTO bets SET date = '2017-12-05', price = 11399, user_id = 2, lot_id = 4;
 
+# список всех категорий
+SELECT name FROM categories;
+
+# самые новые, открытые лоты (
+SELECT name, price, image, COUNT(b.id), MAX(b.price), l.category_id FROM lots l
+  JOIN categories c ON l.category_id = c.id
+  JOIN bets b ON b.lot_id = l.id
+  WHERE end_date > CAST(NOW() as DATETIME);
+
+# найти лот по его названию или описанию
+SELECT * FROM lots WHERE name = '2014 Rossignol District Snowboard' OR description = 'Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив снег мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот снаряд отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом кэмбер позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется, просто посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла равнодушным.';
+
+# обновить название лота по его идентификатору
+UPDATE lots SET name = 'Rossignol District Snowboard' WHERE id = 1;
+
+# получить список самых свежих ставок для лота по его идентификатору
+SELECT * FROM bets WHERE lot_id = 1 ORDER BY date ASC LIMIT 2;
+
