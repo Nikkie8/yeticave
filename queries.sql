@@ -30,7 +30,6 @@ INSERT INTO lots SET
   end_date = '2017-12-01',
   rate_step = 500,
   owner_id = 1,
-  winner_id = 2,
   category_id = 1;
 INSERT INTO lots SET
   creation_date = '2017-12-01',
@@ -43,7 +42,7 @@ INSERT INTO lots SET
   owner_id = 1,
   category_id = 1;
 INSERT INTO lots SET
-  creation_date = '2017-12-01',
+  creation_date = '2017-11-29',
   name = 'Крепления Union Contact Pro 2015 года размер L/XL',
   description = 'Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив снег мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот снаряд отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом кэмбер позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется, просто посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла равнодушным.',
   image = 'img/lot-3.jpg',
@@ -51,10 +50,9 @@ INSERT INTO lots SET
   end_date = '2017-12-03',
   rate_step = 100,
   owner_id = 1,
-  winner_id = 2,
   category_id = 2;
 INSERT INTO lots SET
-  creation_date = '2017-12-05',
+  creation_date = '2017-12-03',
   name = 'Ботинки для сноуборда DC Mutiny Charocal',
   description = 'Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив снег мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот снаряд отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом кэмбер позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется, просто посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла равнодушным.',
   image = 'img/lot-4.jpg',
@@ -83,3 +81,11 @@ INSERT INTO lots SET
   rate_step = 100,
   owner_id = 3,
   category_id = 6;
+
+INSERT INTO bets SET date = '2017-11-28', price = 11499, user_id = 3, lot_id = 1;
+INSERT INTO bets SET date = '2017-11-29', price = 11999, user_id = 2, lot_id = 1;
+INSERT INTO bets SET date = '2017-12-01', price = 8100, user_id = 2, lot_id = 3;
+INSERT INTO bets SET date = '2017-12-02', price = 8200, user_id = 3, lot_id = 3;
+INSERT INTO bets SET date = '2017-12-04', price = 11199, user_id = 3, lot_id = 4;
+INSERT INTO bets SET date = '2017-12-05', price = 11399, user_id = 2, lot_id = 4;
+
