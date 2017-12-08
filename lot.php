@@ -1,8 +1,7 @@
 <?php
-require_once('data.php');
 require_once('init.php');
 
-$item = null;
+$lot = null;
 $my_bets = [];
 $user_registered = check_auth();
 $errors = [];
@@ -23,10 +22,22 @@ if (isset($_COOKIE['my-lots'])) {
 
 if (isset($_GET['lot_id'])) {
     $lot_id = $_GET['lot_id'];
-    $item = $items[$lot_id];
-    $item['lot-id'] = $lot_id;
+    $lot = [];
+    foreach ($lots as $key => $item) {
+        if ($item['id'] == $lot_id) {
+            $lot = $item;
+            break;
+        }
+    }
+
+    $sql_bets = 'SELECT bets.id as bet_id, bets.date, bets.price, users.name as user_name FROM bets
+                 JOIN users ON bets.user_id = users.id
+                 JOIN lots ON bets.lot_id = lots.id
+                 WHERE lot_id = ' . $lot_id;
+    $bets = get_data($sql_bets, $connection);
+
     $lot_content = render_template('templates/lot.php', [
-        'item' => $item,
+        'lot' => $lot,
         'bets' => $bets,
         'user_registered' => $user_registered
     ]);

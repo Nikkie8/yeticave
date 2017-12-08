@@ -22,6 +22,7 @@ function render_template($template_url = '', $data = []) {
  * @return false|string
  */
 function format_time($time) {
+    $time = strtotime($time);
     $now = strtotime('now');
     $time_passed = $now - $time;
     $hours = $time_passed / 3600;

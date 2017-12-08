@@ -1,5 +1,4 @@
 <?php
-require_once('data.php');
 require_once('init.php');
 
 $index_content = render_template('templates/index.php', [
