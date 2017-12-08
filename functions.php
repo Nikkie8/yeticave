@@ -102,3 +102,11 @@ function check_auth() {
 
     return $user_registered;
 }
+
+function get_data($sql, $connection) {
+    $result = mysqli_query($connection, $sql);
+
+    if ($result) {
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+}

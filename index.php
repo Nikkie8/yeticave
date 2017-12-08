@@ -4,7 +4,7 @@ require_once('init.php');
 
 $index_content = render_template('templates/index.php', [
     'categories' => $categories,
-    'items' => $items
+    'lots' => $lots
 ]);
 
 $index_layout = render_template('templates/layout.php', [
