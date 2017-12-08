@@ -1,5 +1,4 @@
 <?php
-require_once('data.php');
 require_once('init.php');
 
 if (isset($_COOKIE['my-lots'])) {

@@ -1,6 +1,4 @@
 <?php
-require_once('data.php');
-require_once('userdata.php');
 require_once('init.php');
 
 $required = ['email', 'password'];
