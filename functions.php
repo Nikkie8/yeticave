@@ -94,8 +94,6 @@ function search_user($email, $users) {
  * @return array
  */
 function check_auth() {
-    session_start();
-
     $user_registered = [];
 
     if (isset($_SESSION['user'])) {

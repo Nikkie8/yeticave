@@ -1,7 +1,7 @@
 CREATE TABLE categories (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  name CHAR,
-  modifier CHAR
+  name CHAR(200),
+  modifier CHAR(100)
 );
 
 CREATE TABLE users (

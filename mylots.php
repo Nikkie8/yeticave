@@ -1,6 +1,6 @@
 <?php
-require_once('functions.php');
 require_once('data.php');
+require_once('init.php');
 
 if (isset($_COOKIE['my-lots'])) {
     $my_bets = json_decode($_COOKIE['my-lots'], true);
