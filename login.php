@@ -1,13 +1,6 @@
 <?php
 require_once('init.php');
 
-$required = ['email', 'password'];
-$errors = [];
-$errorsDictionary = [
-    'email' => 'Введите e-mail',
-    'password' => 'Введите пароль'
-];
-
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -15,12 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_email = $user_data['email'];
     $user_password = $user_data['password'];
     $user_registered = search_user($user_email, $users);
-
-    foreach ($user_data as $key => $value) {
-        if (in_array($key, $required) && $value == '') {
-            $errors[$key] = $errorsDictionary[$key];
-        }
-    }
+    $required = ['email', 'password'];
+    $errors = validate_form($user_data, $required);
 
     if ($user_registered && password_verify($user_password, $user_registered['password'])) {
         $_SESSION['user'] = $user_registered;
