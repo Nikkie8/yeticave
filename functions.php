@@ -103,24 +103,6 @@ function validate_image($field_name) {
     return $result;
 }
 
-/** Ищет пользователя по адресу почты
- * @param $email
- * @param $users
- * @return null or user
- */
-function search_user($email, $users) {
-    $result = null;
-
-    foreach ($users as $user) {
-        if ($user['email'] == $email) {
-            $result = $user;
-            break;
-        }
-    }
-
-    return $result;
-}
-
 /** Проводит аутентификацию пользователя
  * @return array
  */

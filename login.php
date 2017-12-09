@@ -5,14 +5,15 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_data = $_POST;
-    $user_email = $user_data['email'];
+    $user_email = mysqli_real_escape_string($connection, $user_data['email']);
     $user_password = $user_data['password'];
-    $user_registered = search_user($user_email, $users);
+    $sql_user = "SELECT * FROM users WHERE email = '$user_email'";
+    $user_registered = get_data($sql_user, $connection);
     $required = ['email', 'password'];
     $errors = validate_form($user_data, $required);
 
-    if ($user_registered && password_verify($user_password, $user_registered['password'])) {
-        $_SESSION['user'] = $user_registered;
+    if ($user_registered && password_verify($user_password, $user_registered[0]['password'])) {
+        $_SESSION['user'] = $user_registered[0];
         header('Location: /index.php');
     } else {
         $errors['password'] = 'Вы ввели неверный пароль';

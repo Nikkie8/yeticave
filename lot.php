@@ -23,6 +23,7 @@ if (isset($_COOKIE['my-lots'])) {
 if (isset($_GET['lot_id'])) {
     $lot_id = $_GET['lot_id'];
     $lot = [];
+
     foreach ($lots as $key => $item) {
         if ($item['id'] == $lot_id) {
             $lot = $item;
@@ -79,7 +80,7 @@ if (isset($_POST['lot-id'])) {
     }
 }
 
-if (!$item) {
+if (!$lot) {
     http_response_code(404);
     exit();
 }

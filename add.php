@@ -1,7 +1,6 @@
 <?php
 require_once('init.php');
 
-
 if (!check_auth()) {
     http_response_code(403);
     exit();

@@ -10,6 +10,8 @@ $categories = [];
 $lots = [];
 $bets = [];
 
+session_start();
+
 if (!$connection) {
     $error = mysqli_connect_error();
 
