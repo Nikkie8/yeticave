@@ -103,7 +103,7 @@ function validate_image($field_name) {
     return $result;
 }
 
-/** Проводит аутентификацию пользователя
+/** Проверяет, авторизован ли пользователь
  * @return array
  */
 function check_auth() {

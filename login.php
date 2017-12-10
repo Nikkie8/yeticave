@@ -1,8 +1,6 @@
 <?php
 require_once('init.php');
 
-session_start();
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_data = $_POST;
     $user_email = mysqli_real_escape_string($connection, $user_data['email']);
