@@ -6,7 +6,7 @@
     $name_validation_class = isset($errors['name']) ? $item_not_valid_class : '';
     $contacts_validation_class = isset($errors['contacts']) ? $item_not_valid_class : '';
 ?>
-<form class="form <? $form_validation_class; ?> container" action="signup.php" method="post">
+<form class="form <? $form_validation_class; ?> container" action="signup.php" method="post" enctype="multipart/form-data">
     <h2>Регистрация нового аккаунта</h2>
     <div class="form__item <?= $email_validation_class; ?>">
         <label for="email">E-mail*</label>
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="form__input-file">
-            <input class="visually-hidden" type="file" id="photo2" value="">
+            <input class="visually-hidden" name="avatar" type="file" id="photo2" value="">
             <label for="photo2">
                 <span>+ Добавить</span>
             </label>

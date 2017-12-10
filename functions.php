@@ -77,6 +77,10 @@ function validate_price($val) {
     return ($is_number && $is_positive);
 }
 
+function validate_email($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
+
 /** Валидирует изображение
  * @param $field_name
  * @return bool|null|string
@@ -94,7 +98,7 @@ function validate_image($field_name) {
         if ($file_type !== 'image/jpeg' && $file_type !== 'image/png') {
             $result = false;
         } else {
-            $path = 'img/' . $_FILES[$field_name]['name'];
+            $path = 'img/uploads/' . $_FILES[$field_name]['name'];
             move_uploaded_file($tmp_name, $path);
             $result = $path;
         }
@@ -138,7 +142,7 @@ function get_data($sql, $connection) {
 function validate_form($data, $required, $rules = null) {
     $errors = [];
     $errorsDictionary = [
-        'email' => 'Введите e-mail',
+        'email' => 'Введите корректный e-mail',
         'password' => 'Введите пароль',
         'lot-name' => 'Введите наименование лота',
         'category' => 'Выберите категорию',
