@@ -1,24 +1,32 @@
-<form class="form <?php if (isset($errors)) { print('form--invalid'); } ?> container" action="signup.php" method="post">
+<?php
+    $form_validation_class = isset($errors) ? 'form--invalid' : '';
+    $item_not_valid_class = 'form__item--invalid';
+    $email_validation_class = isset($errors['email']) ? $item_not_valid_class : '';
+    $password_validation_class = isset($errors['password']) ? $item_not_valid_class : '';
+    $name_validation_class = isset($errors['name']) ? $item_not_valid_class : '';
+    $contacts_validation_class = isset($errors['contacts']) ? $item_not_valid_class : '';
+?>
+<form class="form <? $form_validation_class; ?> container" action="signup.php" method="post">
     <h2>Регистрация нового аккаунта</h2>
-    <div class="form__item <?php if(isset($errors['email'])) { print('form__item--invalid'); } ?>">
+    <div class="form__item <?= $email_validation_class; ?>">
         <label for="email">E-mail*</label>
-        <input id="email" type="text" name="email" placeholder="Введите e-mail" required>
-        <span class="form__error">Введите e-mail</span>
+        <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?= htmlspecialchars($user_data['email']); ?>">
+        <span class="form__error"><?= $errors['email']; ?></span>
     </div>
-    <div class="form__item <?php if(isset($errors['password'])) { print('form__item--invalid'); } ?>">
+    <div class="form__item <?= $password_validation_class; ?>">
         <label for="password">Пароль*</label>
-        <input id="password" type="text" name="password" placeholder="Введите пароль" required>
-        <span class="form__error">Введите пароль</span>
+        <input id="password" type="text" name="password" placeholder="Введите пароль">
+        <span class="form__error"><?= $errors['password']; ?></span>
     </div>
-    <div class="form__item <?php if(isset($errors['name'])) { print('form__item--invalid'); } ?>">
+    <div class="form__item <?= $name_validation_class; ?>">
         <label for="name">Имя*</label>
-        <input id="name" type="text" name="name" placeholder="Введите имя" required>
-        <span class="form__error">Введите имя</span>
+        <input id="name" type="text" name="name" placeholder="Введите имя" value="<?= htmlspecialchars($user_data['name']); ?>">
+        <span class="form__error"><?= $errors['name']; ?></span>
     </div>
-    <div class="form__item <?php if(isset($errors['message'])) { print('form__item--invalid'); } ?>">
-        <label for="message">Контактные данные*</label>
-        <textarea id="message" name="message" placeholder="Напишите как с вами связаться" required></textarea>
-        <span class="form__error">Напишите как с вами связаться</span>
+    <div class="form__item <?= $contacts_validation_class; ?>">
+        <label for="contacts">Контактные данные*</label>
+        <textarea id="contacts" name="contacts" placeholder="Напишите как с вами связаться"><?= htmlspecialchars($user_data['contacts']); ?></textarea>
+        <span class="form__error"><?= $errors['contacts']; ?></span>
     </div>
     <div class="form__item form__item--file form__item--last">
         <label>Аватар</label>

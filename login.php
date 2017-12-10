@@ -4,7 +4,7 @@ require_once('init.php');
 $sql_categories = 'SELECT `name`, `modifier` FROM categories';
 $categories = get_data($sql_categories, $connection);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_data = $_POST;
     $user_email = mysqli_real_escape_string($connection, $user_data['email']);
     $user_password = $user_data['password'];

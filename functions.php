@@ -129,6 +129,12 @@ function get_data($sql, $connection) {
     }
 }
 
+/** Валидирует отправленную форму
+ * @param $data данные формы
+ * @param $required обязательные поля
+ * @param null $rules правила валидации
+ * @return array
+ */
 function validate_form($data, $required, $rules = null) {
     $errors = [];
     $errorsDictionary = [
@@ -137,6 +143,8 @@ function validate_form($data, $required, $rules = null) {
         'lot-name' => 'Введите наименование лота',
         'category' => 'Выберите категорию',
         'message' => 'Напишите описание лота',
+        'contacts' => 'Напишите как с вами связаться',
+        'name' => 'Введите имя',
         'image' => 'Загрузите файл в формате jpg/png',
         'lot-rate' => 'Введите начальную цену',
         'lot-step' => 'Введите шаг ставки',
