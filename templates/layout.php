@@ -35,7 +35,7 @@
                 <?php else: ?>
                     <ul class="user-menu__list">
                         <li class="user-menu__item">
-                            <a href="#">Регистрация</a>
+                            <a href="signup.php">Регистрация</a>
                         </li>
                         <li class="user-menu__item">
                             <a href="login.php">Вход</a>
@@ -46,6 +46,17 @@
         </div>
     </header>
     <main class="<?= $main_class; ?>">
+        <?php if(!$is_index): ?>
+            <nav class="nav">
+                <ul class="nav__list container">
+                    <?php foreach ($categories as $key => $category): ?>
+                        <li class="nav__item">
+                            <a href="all-lots.html"><?= $category['name']; ?></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </nav>
+        <?php endif; ?>
         <?= $content; ?>
     </main>
     <footer class="main-footer">
