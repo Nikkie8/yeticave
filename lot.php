@@ -4,13 +4,12 @@ require_once('init.php');
 $lot = null;
 $my_bets = [];
 $user_registered = check_auth();
-$errors = [];
-$required = ['cost'];
-$rules = ['cost' => 'validate_price'];
-$errorsDictionary = ['cost' => 'Введите ставку'];
 $cookie_name = 'my-lots';
 $cookie_expire = strtotime('+30 days');
 $cookie_path = '/';
+
+$sql_categories = 'SELECT `name`, `modifier` FROM categories';
+$categories = get_data($sql_categories, $connection);
 
 if (isset($_COOKIE['my-lots'])) {
     $my_bets = json_decode($_COOKIE[$cookie_name], true);
@@ -22,14 +21,9 @@ if (isset($_COOKIE['my-lots'])) {
 
 if (isset($_GET['lot_id'])) {
     $lot_id = $_GET['lot_id'];
-    $lot = [];
 
-    foreach ($lots as $key => $item) {
-        if ($item['id'] == $lot_id) {
-            $lot = $item;
-            break;
-        }
-    }
+    $sql_lot = 'SELECT lots.id, lots.name, categories.name as category, creation_date, image, description, price, end_date, rate_step FROM lots JOIN categories ON lots.category_id = categories.id WHERE lots.id = ' . $lot_id;
+    $lot = get_data($sql_lot, $connection);
 
     $sql_bets = 'SELECT bets.id as bet_id, bets.date, bets.price, users.name as user_name FROM bets
                  JOIN users ON bets.user_id = users.id
@@ -38,7 +32,7 @@ if (isset($_GET['lot_id'])) {
     $bets = get_data($sql_bets, $connection);
 
     $lot_content = render_template('templates/lot.php', [
-        'lot' => $lot,
+        'lot' => $lot[0],
         'bets' => $bets,
         'user_registered' => $user_registered
     ]);
@@ -49,6 +43,8 @@ if (isset($_POST['lot-id'])) {
     $lot_id = $bet['lot-id'];
     $item = $items[$lot_id];
     $item['lot-id'] = $lot_id;
+    $required = ['cost'];
+    $rules = ['cost' => 'validate_price'];
 
     foreach ($bet as $key => $value) {
         if (in_array($key, $required) && $value == '') {
