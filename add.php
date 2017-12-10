@@ -1,6 +1,5 @@
 <?php
-require_once('functions.php');
-require_once('data.php');
+require_once('init.php');
 
 if (!check_auth()) {
     http_response_code(403);
@@ -8,55 +7,20 @@ if (!check_auth()) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $item = $_POST;
+    $lot = $_POST;
+    $file = 'name';
     $required = ['lot-name', 'category', 'message', 'image', 'lot-rate', 'lot-step', 'lot-date'];
     $rules = [
         'lot-rate' => 'validate_price',
         'lot-step' => 'validate_price'
     ];
-    $errorsDictionary = [
-        'lot-name' => 'Введите наименование лота',
-        'category' => 'Выберите категорию',
-        'message' => 'Напишите описание лота',
-        'image' => 'Загрузите файл в формате jpg/png',
-        'lot-rate' => 'Введите начальную цену',
-        'lot-step' => 'Введите шаг ставки',
-        'lot-date' => 'Введите дату завершения торгов'
-    ];
-    $errors = [];
+    $errors = validate_form($lot, $required, $rules);
+    $image_path = validate_image($file);
 
-    foreach ($item as $key => $value) {
-        if (in_array($key, $required) && $value == '') {
-            $errors[$key] = $errorsDictionary[$key];
-        }
-
-        if (key_exists($key, $rules)) {
-            $result = call_user_func($rules[$key], $value);
-
-            if (!$result) {
-                $errors[$key] = $errorsDictionary[$key];
-            }
-        }
-    }
-
-    if ($item['category'] == 'Выберите категорию') {
-        $errors['category'] = $errorsDictionary['category'];
-    }
-
-    if (empty($_FILES['image']['name'])) {
-        $errors['image'] = $errorsDictionary['image'];
+    if (!$image_path) {
+        $errors[$file] = 'Загрузите файл';
     } else {
-        $tmp_name = $_FILES['image']['tmp_name'];
-        $file_info = finfo_open(FILEINFO_MIME_TYPE);
-        $file_type = finfo_file($file_info, $tmp_name);
-
-        if ($file_type !== 'image/jpeg' && $file_type !== 'image/png') {
-            $errors['image'] = $errorsDictionary['image'];
-        } else {
-            $path = 'img/' . $_FILES['image']['name'];
-            $res = move_uploaded_file($tmp_name, $path);
-            $item['image'] = $path;
-        }
+        $lot[$file] = $image_path;
     }
 
     if (count($errors)) {
@@ -66,8 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'categories' => $categories
         ]);
     } else {
+        // todo: add lot to database here
         $add_content = render_template('templates/lot.php', [
-            'item' => $item,
+            'lot' => $lot,
             'bets' => $bets
         ]);
     }

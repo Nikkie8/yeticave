@@ -1,25 +1,25 @@
 CREATE TABLE categories (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  name CHAR,
-  modifier CHAR
+  name CHAR(200),
+  modifier CHAR(100)
 );
 
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   register_date DATETIME,
-  email CHAR,
-  name CHAR,
-  password CHAR,
-  avatar CHAR,
-  contacts CHAR
+  email CHAR(255),
+  name CHAR(255),
+  password CHAR(255),
+  avatar CHAR(255),
+  contacts CHAR(255)
 );
 
 CREATE TABLE lots (
   id INT AUTO_INCREMENT PRIMARY KEY,
   creation_date DATETIME,
-  name CHAR,
+  name CHAR(255),
   description TEXT,
-  image CHAR,
+  image CHAR(255),
   price DECIMAL,
   end_date DATETIME,
   rate_step DECIMAL,

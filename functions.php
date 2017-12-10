@@ -17,11 +17,12 @@ function render_template($template_url = '', $data = []) {
     return $result;
 }
 
-/**
+/** Форматирует вывод времени в зависимости от того, сколько уже прошло
  * @param $time
  * @return false|string
  */
 function format_time($time) {
+    $time = strtotime($time);
     $now = strtotime('now');
     $time_passed = $now - $time;
     $hours = $time_passed / 3600;
@@ -42,7 +43,7 @@ function format_time($time) {
     return $formatted_time;
 }
 
-/**
+/** Форматирует вывод даты и времени
  * @param $time
  * @return string
  */
@@ -64,6 +65,10 @@ function get_timer($time) {
     return $time_left;
 }
 
+/** Валидирует стоимость
+ * @param $val
+ * @return bool
+ */
 function validate_price($val) {
     $number = floatval($val);
     $is_number = is_numeric($number);
@@ -72,30 +77,36 @@ function validate_price($val) {
     return ($is_number && $is_positive);
 }
 
-/**
- * @param $email
- * @param $users
- * @return null or user
+/** Валидирует изображение
+ * @param $field_name
+ * @return bool|null|string
  */
-function search_user($email, $users) {
+function validate_image($field_name) {
     $result = null;
 
-    foreach ($users as $user) {
-        if ($user['email'] == $email) {
-            $result = $user;
-            break;
+    if (empty($_FILES[$field_name]['name'])) {
+        $result = false;
+    } else {
+        $tmp_name = $_FILES[$field_name]['tmp_name'];
+        $file_info = finfo_open(FILEINFO_MIME_TYPE);
+        $file_type = finfo_file($file_info, $tmp_name);
+
+        if ($file_type !== 'image/jpeg' && $file_type !== 'image/png') {
+            $result = false;
+        } else {
+            $path = 'img/' . $_FILES[$field_name]['name'];
+            move_uploaded_file($tmp_name, $path);
+            $result = $path;
         }
     }
 
     return $result;
 }
 
-/**
+/** Проверяет, авторизован ли пользователь
  * @return array
  */
 function check_auth() {
-    session_start();
-
     $user_registered = [];
 
     if (isset($_SESSION['user'])) {
@@ -103,4 +114,48 @@ function check_auth() {
     }
 
     return $user_registered;
+}
+
+/** Запрашивает данные из БД
+ * @param $sql
+ * @param $connection
+ * @return array|null
+ */
+function get_data($sql, $connection) {
+    $result = mysqli_query($connection, $sql);
+
+    if ($result) {
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+}
+
+function validate_form($data, $required, $rules = null) {
+    $errors = [];
+    $errorsDictionary = [
+        'email' => 'Введите e-mail',
+        'password' => 'Введите пароль',
+        'lot-name' => 'Введите наименование лота',
+        'category' => 'Выберите категорию',
+        'message' => 'Напишите описание лота',
+        'image' => 'Загрузите файл в формате jpg/png',
+        'lot-rate' => 'Введите начальную цену',
+        'lot-step' => 'Введите шаг ставки',
+        'lot-date' => 'Введите дату завершения торгов'
+    ];
+
+    foreach ($data as $key => $value) {
+        if (in_array($key, $required) && $value == '' || $value == 'Выберите категорию') {
+            $errors[$key] = $errorsDictionary[$key];
+        }
+
+        if ($rules && key_exists($key, $rules)) {
+            $result = call_user_func($rules[$key], $value);
+
+            if (!$result) {
+                $errors[$key] = $errorsDictionary[$key];
+            }
+        }
+    }
+
+    return $errors;
 }
