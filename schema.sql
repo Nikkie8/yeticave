@@ -1,3 +1,7 @@
+CREATE DATABASE yeticave;
+
+USE yeticave;
+
 CREATE TABLE categories (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name CHAR(200),
