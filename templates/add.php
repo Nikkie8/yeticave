@@ -10,8 +10,8 @@
             <label for="category">Категория</label>
             <select id="category" name="category" value="<?=$item['category']; ?>">
                 <option>Выберите категорию</option>
-                <?php foreach ($categories as $key => $value): ?>
-                    <option <?php if ($item['category'] == $value['category']) { print('selected'); } ?>><?=$value['category']; ?></option>
+                <?php foreach ($categories as $key => $category): ?>
+                    <option <?php if ($lot['category'] == $category['name']) { print('selected'); } ?>><?=$category['name']; ?></option>
                 <?php endforeach; ?>
             </select>
             <span class="form__error"><?=$errors['category']; ?></span>

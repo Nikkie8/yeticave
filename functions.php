@@ -77,6 +77,10 @@ function validate_price($val) {
     return ($is_number && $is_positive);
 }
 
+/** Валидирует email
+ * @param $email
+ * @return mixed
+ */
 function validate_email($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }

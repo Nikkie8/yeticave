@@ -14,7 +14,6 @@ if (isset($_GET['lot_id'])) {
                 JOIN categories ON lots.category_id = categories.id
                 WHERE lots.id = ' . $lot_id;
     $lot = get_data($sql_lot, $connection);
-
     $sql_bets = 'SELECT bets.id as bet_id, bets.date, bets.price, users.name as user_name FROM bets
                  JOIN users ON bets.user_id = users.id
                  JOIN lots ON bets.lot_id = lots.id
