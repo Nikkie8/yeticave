@@ -26,7 +26,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             'errors' => $errors
         ]);
     } else {
-        // todo: insert data into database
         $sql_user_insert = 'INSERT INTO users (register_date, email, name, password, avatar, contacts) VALUES (NOW(), ?, ?, ?, ?, ?)';
         $stmt = mysqli_prepare($connection, $sql_user_insert);
         mysqli_stmt_bind_param($stmt, 'sssss', $user_data['email'], $user_data['name'], $user_password_hash, $image_path, $user_data['contacts']);
