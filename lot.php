@@ -18,7 +18,7 @@ if (isset($_GET['lot_id'])) {
     $sql_bets = 'SELECT bets.id as bet_id, bets.date, bets.price, users.name as user_name FROM bets
                  JOIN users ON bets.user_id = users.id
                  JOIN lots ON bets.lot_id = lots.id
-                 WHERE lot_id = ' . $lot_id;
+                 WHERE lot_id = ' . $lot_id . ' ORDER BY bets.date DESC';
     $bets = get_data($sql_bets, $connection);
 
     $lot_content = render_template('templates/lot.php', [
@@ -30,7 +30,7 @@ if (isset($_GET['lot_id'])) {
 
 if (isset($_POST['lot-id'])) {
     $bet = $_POST;
-    $lot_id = $bet['lot-id'];
+    $lot_id = intval($bet['lot-id']);
     $sql_lot = 'SELECT lots.id, lots.name, categories.name as category, creation_date, image, description, price, end_date, rate_step FROM lots
                 JOIN categories ON lots.category_id = categories.id
                 WHERE lots.id = ' . $lot_id;
@@ -41,23 +41,37 @@ if (isset($_POST['lot-id'])) {
     $sql_bets = 'SELECT bets.id as bet_id, bets.date, bets.price, users.name as user_name FROM bets
                  JOIN users ON bets.user_id = users.id
                  JOIN lots ON bets.lot_id = lots.id
-                 WHERE lot_id = ' . $lot_id;
+                 WHERE lot_id = ' . $lot_id . ' ORDER BY bets.date DESC';
     $bets = get_data($sql_bets, $connection);
+
+    if ($bet['cost'] < ($lot[0]['price'] + $lot[0]['rate_step'])) {
+        $errors['cost'] = 'Ставка должна быть больше текущей цены с учетом минимального шага';
+    }
 
     if (count($errors)) {
         $lot_content = render_template('templates/lot.php', [
-            'lot' => $lot,
+            'lot' => $lot[0],
             'bets' => $bets,
             'errors' => $errors,
+            'user_registered' => $user_registered
         ]);
     } else {
+        mysqli_query($connection, 'START TRANSACTION');
         $sql_bet_insert = 'INSERT INTO bets (date, price, user_id, lot_id) VALUES (NOW(), ?, ?, ?)';
-        $stmt = mysqli_prepare($connection, $sql_bet_insert);
-        mysqli_stmt_bind_param($stmt, 'iii', $bet['cost'], $user_id, $lot_id);
-        $result = mysqli_stmt_execute($stmt);
-        if ($result) {
-            header('Location: /lot.php?lot_id=' . $lot_id);
+        $stmt_bet_insert = mysqli_prepare($connection, $sql_bet_insert);
+        mysqli_stmt_bind_param($stmt_bet_insert, 'iii', $bet['cost'], $user_id, $lot_id);
+        $result_bet_insert = mysqli_stmt_execute($stmt_bet_insert);
+        $sql_lot_update = 'UPDATE lots SET price = ? WHERE id = ' . $lot_id;
+        $stmt_lot_update = mysqli_prepare($connection, $sql_lot_update);
+        mysqli_stmt_bind_param($stmt_lot_update, 'i', $bet['cost']);
+        $result_lot_update = mysqli_stmt_execute($stmt_lot_update);
+        if ($result_bet_insert && $result_lot_update) {
+            mysqli_query($connection, 'COMMIT');
+        } else {
+            mysqli_query($connection, 'ROLLBACK');
         }
+
+        header('Location: /lot.php?lot_id=' . $lot_id);
     }
 }
 
