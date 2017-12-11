@@ -5,12 +5,15 @@ $sql_categories = 'SELECT `name`, `modifier` FROM categories';
 $categories = get_data($sql_categories, $connection);
 $lot = null;
 $user_registered = check_auth();
-$user_id = $user_registered['id'];
+$user_id = intval($user_registered['id']);
+$is_bet = false;
 
 if (isset($_GET['lot_id'])) {
-    $lot_id = $_GET['lot_id'];
+    $lot_id = intval($_GET['lot_id']);
 
-    $sql_lot = 'SELECT lots.id, lots.name, categories.name as category, creation_date, image, description, price, end_date, rate_step FROM lots 
+    $sql_is_bet = "SELECT id FROM bets WHERE user_id = '$user_id' AND lot_id = '$lot_id'";
+    $is_bet = get_data($sql_is_bet, $connection);
+    $sql_lot = 'SELECT lots.id, lots.name, lots.owner_id, categories.name as category, creation_date, image, description, price, end_date, rate_step FROM lots 
                 JOIN categories ON lots.category_id = categories.id
                 WHERE lots.id = ' . $lot_id;
     $lot = get_data($sql_lot, $connection);
@@ -23,7 +26,8 @@ if (isset($_GET['lot_id'])) {
     $lot_content = render_template('templates/lot.php', [
         'lot' => $lot[0],
         'bets' => $bets,
-        'user_registered' => $user_registered
+        'user_registered' => $user_registered,
+        'is_bet' => $is_bet
     ]);
 }
 
@@ -70,7 +74,7 @@ if (isset($_POST['lot-id'])) {
             mysqli_query($connection, 'ROLLBACK');
         }
 
-        header('Location: /lot.php?lot_id=' . $lot_id);
+        header('Location: /mylots.php');
     }
 }
 
