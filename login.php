@@ -1,14 +1,18 @@
 <?php
 require_once('init.php');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+$sql_categories = 'SELECT `name`, `modifier` FROM categories';
+$categories = get_data($sql_categories, $connection);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_data = $_POST;
     $user_email = mysqli_real_escape_string($connection, $user_data['email']);
     $user_password = $user_data['password'];
     $sql_user = "SELECT * FROM users WHERE email = '$user_email'";
     $user_registered = get_data($sql_user, $connection);
     $required = ['email', 'password'];
-    $errors = validate_form($user_data, $required);
+    $rules = ['email' => 'validate_email'];
+    $errors = validate_form($user_data, $required, $rules);
 
     if ($user_registered && password_verify($user_password, $user_registered[0]['password'])) {
         $_SESSION['user'] = $user_registered[0];

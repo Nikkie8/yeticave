@@ -6,9 +6,12 @@ if (!check_auth()) {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+$sql_categories = 'SELECT `name`, `modifier` FROM categories';
+$categories = get_data($sql_categories, $connection);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $lot = $_POST;
-    $file = 'name';
+    $file = 'image';
     $required = ['lot-name', 'category', 'message', 'image', 'lot-rate', 'lot-step', 'lot-date'];
     $rules = [
         'lot-rate' => 'validate_price',
