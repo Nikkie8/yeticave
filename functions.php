@@ -77,6 +77,10 @@ function validate_price($val) {
     return ($is_number && $is_positive);
 }
 
+/** Валидирует email
+ * @param $email
+ * @return mixed
+ */
 function validate_email($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
@@ -134,9 +138,9 @@ function get_data($sql, $connection) {
 }
 
 /** Валидирует отправленную форму
- * @param $data данные формы
- * @param $required обязательные поля
- * @param null $rules правила валидации
+ * @param $data
+ * @param $required
+ * @param null $rules
  * @return array
  */
 function validate_form($data, $required, $rules = null) {
@@ -152,7 +156,8 @@ function validate_form($data, $required, $rules = null) {
         'image' => 'Загрузите файл в формате jpg/png',
         'lot-rate' => 'Введите начальную цену',
         'lot-step' => 'Введите шаг ставки',
-        'lot-date' => 'Введите дату завершения торгов'
+        'lot-date' => 'Введите дату завершения торгов',
+        'cost' => ''
     ];
 
     foreach ($data as $key => $value) {

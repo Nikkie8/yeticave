@@ -6,6 +6,9 @@ if (!check_auth()) {
     exit();
 }
 
+$sql_categories = 'SELECT `name`, `modifier` FROM categories';
+$categories = get_data($sql_categories, $connection);
+
 if (isset($_SESSION['user'])) {
     $user_id = intval($_SESSION['user']['id']);
 
