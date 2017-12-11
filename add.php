@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (count($errors)) {
         $add_content = render_template('templates/add.php', [
-            'item' => $item,
+            'lot' => $lot,
             'errors' => $errors,
             'categories' => $categories
         ]);
