@@ -1,4 +1,4 @@
-CREATE DATABASE yeticave;
+CREATE DATABASE yeticave CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 USE yeticave;
 

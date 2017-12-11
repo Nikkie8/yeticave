@@ -38,11 +38,11 @@ VALUES
 # список всех категорий
 SELECT name FROM categories;
 
-# самые новые, открытые лоты (
-SELECT name, price, image, COUNT(b.id), MAX(b.price), l.category_id FROM lots l
-  JOIN categories c ON l.category_id = c.id
-  JOIN bets b ON b.lot_id = l.id
-  WHERE end_date > CAST(NOW() as DATETIME);
+# самые новые, открытые лоты
+SELECT lots.name, lots.price, image, COUNT(bets.id), MAX(bets.price), lots.category_id FROM lots
+  JOIN categories ON lots.category_id = categories.id
+  JOIN bets ON bets.lot_id = lots.id
+  WHERE end_date > NOW();
 
 # найти лот по его названию или описанию
 SELECT * FROM lots WHERE name = '2014 Rossignol District Snowboard' OR description = 'Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив снег мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот снаряд отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом кэмбер позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется, просто посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла равнодушным.';
