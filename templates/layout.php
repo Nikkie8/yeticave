@@ -2,6 +2,7 @@
     $user_registered = check_auth();
     $link_to_index = !(isset($is_index)) ? 'href="index.php"' : '';
     $is_auth = $user_registered ? true : false;
+    $main_class = isset($main_class) ? $main_class : '';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
