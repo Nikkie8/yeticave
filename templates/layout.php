@@ -1,6 +1,6 @@
 <?php
     $user_registered = check_auth();
-    $link_to_index = (!$is_index) ? 'href="index.php"' : '';
+    $link_to_index = !(isset($is_index)) ? 'href="index.php"' : '';
     $is_auth = $user_registered ? true : false;
 ?>
 <!DOCTYPE html>
@@ -26,10 +26,10 @@
             <nav class="user-menu">
                 <?php if ($is_auth): ?>
                     <div class="user-menu__image">
-                        <img src="<?= $user_registered['avatar']; ?>" width="40" height="40" alt="<?= $user_registered['name']; ?>">
+                        <img src="<?= htmlspecialchars($user_registered['avatar']); ?>" width="40" height="40" alt="<?= htmlspecialchars($user_registered['name']); ?>">
                     </div>
                     <div class="user-menu__logged">
-                        <p><?= $user_registered['name']; ?></p>
+                        <p><?= htmlspecialchars($user_registered['name']); ?></p>
                         <a href="logout.php">Выйти</a>
                     </div>
                 <?php else: ?>
@@ -46,12 +46,12 @@
         </div>
     </header>
     <main class="<?= $main_class; ?>">
-        <?php if(!$is_index): ?>
+        <?php if(!(isset($is_index))): ?>
             <nav class="nav">
                 <ul class="nav__list container">
                     <?php foreach ($categories as $key => $category): ?>
                         <li class="nav__item">
-                            <a href="all-lots.html"><?= $category['name']; ?></a>
+                            <a href="all-lots.html"><?= htmlspecialchars($category['name']); ?></a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -64,7 +64,7 @@
             <ul class="nav__list container">
                 <?php foreach ($categories as $key => $category): ?>
                     <li class="nav__item">
-                        <a href="all-lots.html"><?= $category['name']; ?></a>
+                        <a href="all-lots.html"><?= htmlspecialchars($category['name']); ?></a>
                     </li>
                 <?php endforeach; ?>
             </ul>

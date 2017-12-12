@@ -2,6 +2,8 @@
 require_once('functions.php');
 require_once('mysql_helper.php');
 
+error_reporting(E_ALL);
+
 $connection = mysqli_connect('127.0.0.1', 'root', 'shell', 'yeticave');
 mysqli_set_charset($connection, 'utf8');
 date_default_timezone_set('Europe/Moscow');

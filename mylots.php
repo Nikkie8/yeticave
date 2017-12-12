@@ -31,10 +31,7 @@ if (isset($_SESSION['user'])) {
 $mylots_layout = render_template('templates/layout.php', [
     'content' => $mylots_content,
     'categories' => $categories,
-    'page_title' => 'Мои ставки',
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
-    'user_avatar' => $user_avatar
+    'page_title' => 'Мои ставки'
 ]);
 
 print($mylots_layout);

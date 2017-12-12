@@ -5,7 +5,7 @@ $sql_categories = 'SELECT `name`, `modifier` FROM categories';
 $categories = get_data($sql_categories, $connection);
 $lot = null;
 $user_registered = check_auth();
-$user_id = intval($user_registered['id']);
+$user_id = $user_registered ? intval($user_registered['id']) : '';
 $is_bet = false;
 
 if (isset($_GET['lot_id'])) {
@@ -86,10 +86,7 @@ if (!$lot) {
 $lot_layout = render_template('templates/layout.php', [
     'content' => $lot_content,
     'categories' => $categories,
-    'page_title' => $item['title'],
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
-    'user_avatar' => $user_avatar
+    'page_title' => $lot[0]['name']
 ]);
 
 print($lot_layout);

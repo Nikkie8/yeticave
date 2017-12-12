@@ -2,7 +2,7 @@
 require_once('init.php');
 
 $user_registered = check_auth();
-$user_id = intval($user_registered['id']);
+$user_id = $user_registered ? intval($user_registered['id']) : '';
 
 if (!$user_registered) {
     http_response_code(403);
@@ -58,10 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $add_layout = render_template('templates/layout.php', [
     'content' => $add_content,
     'categories' => $categories,
-    'page_title' => 'Добавление лота',
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
-    'user_avatar' => $user_avatar
+    'page_title' => 'Добавление лота'
 ]);
 
 print($add_layout);

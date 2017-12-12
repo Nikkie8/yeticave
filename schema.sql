@@ -42,6 +42,5 @@ CREATE TABLE bets (
 
 CREATE UNIQUE INDEX category_name ON categories(name);
 CREATE UNIQUE INDEX email ON users(email);
-CREATE UNIQUE INDEX user_name ON users(name);
 
 CREATE INDEX lot_name ON lots(name);

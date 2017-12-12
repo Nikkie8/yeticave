@@ -3,6 +3,7 @@ require_once('init.php');
 
 $sql_categories = 'SELECT `name`, `modifier` FROM categories';
 $categories = get_data($sql_categories, $connection);
+$user_data = [];
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_data = $_POST;

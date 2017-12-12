@@ -2,31 +2,38 @@
     $form_validation_class = isset($errors) ? 'form--invalid' : '';
     $item_not_valid_class = 'form__item--invalid';
     $email_validation_class = isset($errors['email']) ? $item_not_valid_class : '';
+    $email_error_message = isset($errors['email']) ? $errors['email'] : '';
     $password_validation_class = isset($errors['password']) ? $item_not_valid_class : '';
+    $password_error_message = isset($errors['password']) ? $errors['password'] : '';
     $name_validation_class = isset($errors['name']) ? $item_not_valid_class : '';
+    $name_error_message = isset($errors['name']) ? $errors['name'] : '';
     $contacts_validation_class = isset($errors['contacts']) ? $item_not_valid_class : '';
+    $contacts_error_message = isset($errors['contacts']) ? $errors['contacts'] : '';
+    $user_email = isset($user_data['email']) ? htmlspecialchars($user_data['email']) : '';
+    $user_name = isset($user_data['name']) ? htmlspecialchars($user_data['name']) : '';
+    $user_contacts = isset($user_data['contacts']) ? htmlspecialchars($user_data['contacts']) : '';
 ?>
-<form class="form <? $form_validation_class; ?> container" action="signup.php" method="post" enctype="multipart/form-data">
+<form class="form <?= $form_validation_class; ?> container" action="signup.php" method="post" enctype="multipart/form-data">
     <h2>Регистрация нового аккаунта</h2>
     <div class="form__item <?= $email_validation_class; ?>">
         <label for="email">E-mail*</label>
-        <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?= htmlspecialchars($user_data['email']); ?>">
-        <span class="form__error"><?= $errors['email']; ?></span>
+        <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?= $user_email ?>">
+        <span class="form__error"><?= $email_error_message ?></span>
     </div>
     <div class="form__item <?= $password_validation_class; ?>">
         <label for="password">Пароль*</label>
-        <input id="password" type="text" name="password" placeholder="Введите пароль">
-        <span class="form__error"><?= $errors['password']; ?></span>
+        <input id="password" type="password" name="password" placeholder="Введите пароль">
+        <span class="form__error"><?= $password_error_message; ?></span>
     </div>
     <div class="form__item <?= $name_validation_class; ?>">
         <label for="name">Имя*</label>
-        <input id="name" type="text" name="name" placeholder="Введите имя" value="<?= htmlspecialchars($user_data['name']); ?>">
-        <span class="form__error"><?= $errors['name']; ?></span>
+        <input id="name" type="text" name="name" placeholder="Введите имя" value="<?= $user_name; ?>">
+        <span class="form__error"><?= $name_error_message; ?></span>
     </div>
     <div class="form__item <?= $contacts_validation_class; ?>">
         <label for="contacts">Контактные данные*</label>
-        <textarea id="contacts" name="contacts" placeholder="Напишите как с вами связаться"><?= htmlspecialchars($user_data['contacts']); ?></textarea>
-        <span class="form__error"><?= $errors['contacts']; ?></span>
+        <textarea id="contacts" name="contacts" placeholder="Напишите как с вами связаться"><?= $user_contacts; ?></textarea>
+        <span class="form__error"><?= $contacts_error_message; ?></span>
     </div>
     <div class="form__item form__item--file form__item--last">
         <label>Аватар</label>
